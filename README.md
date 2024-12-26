@@ -33,7 +33,8 @@ This project is a simple Task Management application where users can register, l
 ```
 backend/
 │
-├── config-database.js      # MongoDB connection configuration
+├── config                  # MongoDB connection configuration
+|   └── database.js
 ├── controllers/
 │   ├── authController.js   # Handles registration and login
 │   └── taskController.js   # Handles task operations (CRUD)
@@ -55,13 +56,13 @@ frontend/
 ├── public/                    # Static files (index.html, images, etc.)
 ├── src/
 │   ├── components/
-|   |   ├── TaskModal.js
+|   |   └── TaskModal.js
 │   ├── context/               # Authentication context
-|   |   ├── authContext.js
+|   |   └── authContext.js
 │   ├── pages/                 # React pages (Dashboard, Login, Registration)
 |   |   ├── DashboardPage.js
 |   |   ├── LoginPage.js
-|   |   ├── RegistrationPage.js
+|   |   └── RegistrationPage.js
 │   ├── App.js                 # Main App component
 │   ├── index.css              # Global styles (including Tailwind)
 │   └── index.js               # Entry point for React app
