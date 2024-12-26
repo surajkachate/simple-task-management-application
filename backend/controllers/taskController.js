@@ -1,7 +1,7 @@
 const Task = require('../models/Task');
 
 // Fetch all tasks for the logged-in user
-exports.getTasks = async (req, res) => {
+const getTasks = async (req, res) => {
     console.log(req)
     try {
         const tasks = await Task.find({ userId: req.user._id });
@@ -13,7 +13,7 @@ exports.getTasks = async (req, res) => {
 };
 
 // Add a new task
-exports.addTask = async (req, res) => {
+const addTask = async (req, res) => {
     const { title, description } = req.body;
 
     if (!title) {
@@ -29,8 +29,42 @@ exports.addTask = async (req, res) => {
     }
 };
 
+// Update a task's title and description
+const updateTaskDetails = async (req, res) => {
+    const { id } = req.params;
+    const { title, description } = req.body;
+
+    if (!title && !description) {
+        return res.status(400).json({ 
+            success: false, 
+            message: 'At least one of title or description is required to update' 
+        });
+    }
+
+    try {
+        const updatedFields = {};
+        if (title) updatedFields.title = title;
+        if (description) updatedFields.description = description;
+
+        const task = await Task.findByIdAndUpdate(
+            id,
+            { $set: updatedFields },
+            { new: true, runValidators: true }
+        );
+
+        if (!task) {
+            return res.status(404).json({ success: false, message: 'Task not found' });
+        }
+
+        res.status(200).json({ success: true, data: task });
+    } catch (error) {
+        console.error('Error updating task details:', error.message);
+        res.status(500).json({ success: false, message: 'Server Error', error: error.message });
+    }
+};
+
 // Update a task's completion status
-exports.updateTask = async (req, res) => {
+const updateTask = async (req, res) => {
     const { id } = req.params;
     const { completed } = req.body;
 
@@ -57,7 +91,7 @@ exports.updateTask = async (req, res) => {
 };
 
 // Remove a task
-exports.deleteTask = async (req, res) => {
+const deleteTask = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -72,4 +106,12 @@ exports.deleteTask = async (req, res) => {
         console.error('Error deleting task:', error.message);
         res.status(500).json({ success: false, message: 'Server Error', error: error.message });
     }
+};
+
+module.exports = {
+    getTasks,
+    addTask,
+    updateTaskDetails,
+    updateTask,
+    deleteTask
 };

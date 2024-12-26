@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-exports.auth = (req, res, next) => {
+const auth = (req, res, next) => {
     try {
         console.log("cookie" , req.cookies.token);
         console.log("body" , req.body.token);
@@ -37,3 +37,6 @@ exports.auth = (req, res, next) => {
     }
 };
 
+module.exports = {
+    auth
+}

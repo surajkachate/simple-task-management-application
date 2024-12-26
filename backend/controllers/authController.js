@@ -4,9 +4,8 @@ const jwt = require("jsonwebtoken");
 const { options } = require("../routes/userRoutes");
 require("dotenv").config();
 
-
 //signup route handler
-exports.signup = async (req, res) => {
+const signup = async (req, res) => {
     try {
         // Get data from request body
         const { name, email, password } = req.body;
@@ -62,7 +61,7 @@ exports.signup = async (req, res) => {
 
 
 //login
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     try {
         // Fetch data from request body
         const { email, password } = req.body;
@@ -125,4 +124,9 @@ exports.login = async (req, res) => {
             message: 'Login failed, please try again later',
         });
     }
+};
+
+module.exports = {
+    signup,
+    login
 };

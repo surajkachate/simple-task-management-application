@@ -156,9 +156,8 @@ const DashboardPage = () => {
                 </div>
                 <div className="flex space-x-2">
                   <button
-                    className={`flex items-center justify-center px-3 py-2 rounded text-white ${
-                      task.completed ? "bg-green-500 hover:bg-green-600" : "bg-yellow-500 hover:bg-yellow-600"
-                    }`}
+                    className={`flex items-center justify-center px-3 py-2 rounded text-white ${task.completed ? "bg-green-500 hover:bg-green-600" : "bg-yellow-500 hover:bg-yellow-600"
+                      }`}
                     onClick={() => toggleTaskCompletion(task._id)}
                   >
                     <FaCheck className="mr-1" />
