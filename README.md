@@ -72,7 +72,7 @@ frontend/
 ### Backend
 1. **Clone the repository**:
    ```
-   git clone <repo-url>
+   git clone https://github.com/surajkachate/simple-task-management-application.git
    cd backend
    ```
 
@@ -84,8 +84,9 @@ frontend/
 3. **Set up environment variables**:
    Create a `.env` file in the `backend/` directory and add the following:
    ```
-   JWT_SECRET=your_jwt_secret
-   DB_URI=your_mongodb_connection_string
+   PORT = 5000
+   DATABASE_URL = your_mongodb_connection_string
+   JWT_SECRET = your_jwt_secret
    ```
 
 4. **Run the backend**:
@@ -106,7 +107,14 @@ frontend/
    npm install
    ```
 
-3. **Run the frontend**:
+3. **Set up environment variables**:
+   Create a `.env` file in the `backend/` directory and add the following:
+   ```
+   REACT_APP_BASE_URL="http://localhost:5000/api"
+   JWT_SECRET = your_jwt_secret
+   ```
+
+4. **Run the frontend**:
    ```
    npm start
    ```
