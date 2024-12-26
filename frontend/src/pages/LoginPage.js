@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [formError, setFormError] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -13,10 +16,22 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!email.trim() || !password.trim()) {
-      alert("Please enter both email and password.");
-      return;
+    let valid = true;
+    if (!email.trim()) {
+      setEmailError("Email is required.");
+      valid = false;
+    } else {
+      setEmailError("");
     }
+
+    if (!password.trim()) {
+      setPasswordError("Password is required.");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!valid) return;
 
     try {
       const response = await fetch(`${BASE_URL}/user/login`, {
@@ -33,12 +48,10 @@ function LoginPage() {
         login(data.token);
         navigate("/");
       } else {
-        console.error("Login failed:", data.message);
-        alert(data.message || "Invalid login credentials.");
+        setFormError(data.message || "Invalid login credentials.");
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      alert("An error occurred while trying to log in. Please try again.");
+      setFormError("An error occurred while trying to log in. Please try again.");
     }
   };
 
@@ -60,9 +73,11 @@ function LoginPage() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
+            {emailError && (
+              <p className="mt-1 text-sm text-red-600">{emailError}</p>
+            )}
           </div>
           <div>
             <label
@@ -77,10 +92,15 @@ function LoginPage() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
+            {passwordError && (
+              <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+            )}
           </div>
+          {formError && (
+            <p className="text-sm text-red-600 text-center">{formError}</p>
+          )}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

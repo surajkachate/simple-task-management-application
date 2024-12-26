@@ -5,7 +5,11 @@ function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -13,13 +17,26 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      setError("All fields are required.");
-      return;
+    let formErrors = { name: "", email: "", password: "" };
+
+    if (!name.trim()) {
+      formErrors.name = "Name is required.";
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
+    if (!email.trim()) {
+      formErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      formErrors.email = "Please provide a valid email address.";
+    }
+
+    if (!password.trim()) {
+      formErrors.password = "Password is required.";
+    } else if (password.length < 6) {
+      formErrors.password = "Password must be at least 6 characters long.";
+    }
+
+    if (Object.values(formErrors).some((error) => error)) {
+      setErrors(formErrors);
       return;
     }
 
@@ -37,11 +54,11 @@ function RegisterPage() {
       if (response.ok) {
         navigate("/login"); // Navigate to login page on success
       } else {
-        setError(data.message || "Registration failed. Please try again.");
+        setErrors({ ...formErrors, general: data.message || "Registration failed. Please try again." });
       }
     } catch (err) {
       console.error("Error during registration:", err);
-      setError("An error occurred during registration. Please try again later.");
+      setErrors({ ...formErrors, general: "An error occurred during registration. Please try again later." });
     }
   };
 
@@ -60,9 +77,9 @@ function RegisterPage() {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -74,9 +91,9 @@ function RegisterPage() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -88,11 +105,11 @@ function RegisterPage() {
               placeholder="Enter a secure password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {errors.general && <p className="text-red-500 text-sm mt-1">{errors.general}</p>}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
