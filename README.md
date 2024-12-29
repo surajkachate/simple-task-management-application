@@ -5,12 +5,16 @@
 ![image](https://github.com/user-attachments/assets/c0aac00c-d5d8-4ac6-9ca6-b14fbfd67595)
 ### Register
 ![image](https://github.com/user-attachments/assets/97985696-3552-48f9-8500-c634df32bd91)
-### Create new task
+### Create New Task
 ![image](https://github.com/user-attachments/assets/99c7e79c-9492-4ba6-9e67-a74620bf4e82)
 ### Dashboard
 ![image](https://github.com/user-attachments/assets/925db778-aa6d-422d-a0e8-af664a894b8f)
 
 ## Video
+### Frontend-backend working
+https://github.com/user-attachments/assets/2db52e3b-a947-4546-b5a9-48dbc00ba3ee
+### Backend Working
+https://github.com/user-attachments/assets/df86c8cb-3be4-4cdf-8c69-451afd8f746d
 
 ## Overview
 
