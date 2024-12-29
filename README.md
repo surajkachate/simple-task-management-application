@@ -1,5 +1,17 @@
 # Task Management Application
 
+## Images
+### Login
+![image](https://github.com/user-attachments/assets/c0aac00c-d5d8-4ac6-9ca6-b14fbfd67595)
+### Register
+![image](https://github.com/user-attachments/assets/97985696-3552-48f9-8500-c634df32bd91)
+### Create new task
+![image](https://github.com/user-attachments/assets/99c7e79c-9492-4ba6-9e67-a74620bf4e82)
+### Dashboard
+![image](https://github.com/user-attachments/assets/925db778-aa6d-422d-a0e8-af664a894b8f)
+
+## Video
+
 ## Overview
 
 This project is a simple Task Management application where users can register, log in, create, update, delete, and view tasks. The tasks can also be marked as complete or incomplete.
